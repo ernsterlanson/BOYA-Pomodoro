@@ -1,0 +1,90 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5;
+}
+
+.container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    min-width: 400px;
+}
+
+h1 {
+    font-weight: 300;
+    color: #445566;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+.timer {
+    font-size: 5rem;
+    font-weight: 200;
+    margin: 2rem 0;
+    color: #34495e;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.controls button {
+    font-size: 1rem;
+    margin: 0 0.8rem;
+    padding: 0.8rem 2rem;
+    cursor: pointer;
+    background-color: transparent;
+    color: #546e7a;
+    border: 1px solid #546e7a;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.controls button:hover {
+    background-color: #546e7a;
+    color: #f0f2f5;
+}
+
+#status-text {
+    font-size: 1rem;
+    color: #90a4ae;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.timer-container {
+    position: relative;
+    margin: 2rem 0;
+    padding-top: 2.5rem;
+}
+
+#toggle-mode {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.8rem;
+    padding: 0.5rem 1.2rem;
+    background-color: transparent;
+    color: #78909c;
+    border: 1px solid #78909c;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+#toggle-mode:hover {
+    background-color: #78909c;
+    color: #f0f2f5;
+} 
