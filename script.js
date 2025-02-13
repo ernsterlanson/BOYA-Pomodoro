@@ -112,31 +112,4 @@ toggleButton.addEventListener('click', () => {
 
 // Initialize the display
 timeLeft = WORK_TIME;
-updateDisplay();
-
-// Add this function to test the sound
-function testSound() {
-    alarmSound.play();
-}
-
-// For easier testing from console
-window.testSound = testSound;
-
-// Add these test functions
-function testAllSounds() {
-    console.log("Testing alarm sound...");
-    alarmSound.play();
-    
-    setTimeout(() => {
-        console.log("Testing button click sound...");
-        buttonClickSound.play();
-    }, 1000);
-    
-    setTimeout(() => {
-        console.log("Testing switch mode sound...");
-        switchModeSound.play();
-    }, 2000);
-}
-
-// Make it available in console
-window.testAllSounds = testAllSounds; 
+updateDisplay(); 
