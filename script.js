@@ -1,9 +1,18 @@
 // First declare the constants
 const WORK_TIME = 25 * 60; // 25 minutes in seconds
 const BREAK_TIME = 5 * 60; // 5 minutes in seconds
-const alarmSound = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
-const buttonClickSound = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
-const switchModeSound = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+
+// Sound constants with custom sounds
+const startStopSound = new Audio('sounds/start-stop.mp3');
+const switchModeSound = new Audio('sounds/switch-mode.mp3');
+const workCompleteSound = new Audio('sounds/work-complete.mp3');
+const restCompleteSound = new Audio('sounds/rest-complete.mp3');
+
+// Optional: Preload the sounds
+startStopSound.load();
+switchModeSound.load();
+workCompleteSound.load();
+restCompleteSound.load();
 
 // Then initialize variables using those constants
 let timeLeft = WORK_TIME;
@@ -25,8 +34,14 @@ function updateDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
     
+    const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    // Update the display elements
     minutesDisplay.textContent = minutes.toString().padStart(2, '0');
     secondsDisplay.textContent = seconds.toString().padStart(2, '0');
+    
+    // Update the page title
+    document.title = `(${timeString}) Pomodoro Timer`;
 }
 
 function switchMode() {
@@ -53,26 +68,45 @@ function startTimer() {
         }
     }, 1000);
     
+    startStopSound.play();
     startButton.textContent = 'Pause';
+}
+
+function pauseTimer() {
+    clearInterval(timerId);
+    timerId = null;
+    startStopSound.play();
+    startButton.textContent = 'Start';
 }
 
 function resetTimer() {
     clearInterval(timerId);
     timerId = null;
-    isWorkTime = true;
-    timeLeft = WORK_TIME;
-    statusText.textContent = 'Work Time';
-    startButton.textContent = 'Start';
-    toggleButton.textContent = 'Rest Mode';
+    timeLeft = isWorkTime ? WORK_TIME : BREAK_TIME;
     updateDisplay();
+    startButton.textContent = 'Start';
+}
+
+function toggleMode() {
+    isWorkTime = !isWorkTime;
+    timeLeft = isWorkTime ? WORK_TIME : BREAK_TIME;
+    updateDisplay();
+    switchModeSound.play();
+    toggleButton.textContent = isWorkTime ? 'Rest Mode' : 'Work Mode';
+    statusText.textContent = isWorkTime ? 'Work Time' : 'Rest Time';
 }
 
 function timerComplete() {
     clearInterval(timerId);
     timerId = null;
+    
+    if (isWorkTime) {
+        workCompleteSound.play();
+    } else {
+        restCompleteSound.play();
+    }
+    
     startButton.textContent = 'Start';
-    alarmSound.play();
-    switchMode();
 }
 
 function timerTick() {
@@ -85,30 +119,15 @@ function timerTick() {
 }
 
 startButton.addEventListener('click', () => {
-    buttonClickSound.play();
     if (timerId === null) {
         startTimer();
     } else {
-        clearInterval(timerId);
-        timerId = null;
-        startButton.textContent = 'Start';
+        pauseTimer();
     }
 });
 
-resetButton.addEventListener('click', () => {
-    buttonClickSound.play();
-    resetTimer();
-});
-
-toggleButton.addEventListener('click', () => {
-    switchModeSound.play();
-    if (timerId !== null) {
-        clearInterval(timerId);
-        timerId = null;
-        startButton.textContent = 'Start';
-    }
-    switchMode();
-});
+resetButton.addEventListener('click', resetTimer);
+toggleButton.addEventListener('click', toggleMode);
 
 // Initialize the display
 timeLeft = WORK_TIME;
