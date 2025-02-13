@@ -7,12 +7,14 @@ const startStopSound = new Audio('sounds/start-stop.mp3');
 const switchModeSound = new Audio('sounds/switch-mode.mp3');
 const workCompleteSound = new Audio('sounds/work-complete.mp3');
 const restCompleteSound = new Audio('sounds/rest-complete.mp3');
+const resetSound = new Audio('sounds/reset.mp3');
 
 // Optional: Preload the sounds
 startStopSound.load();
 switchModeSound.load();
 workCompleteSound.load();
 restCompleteSound.load();
+resetSound.load();
 
 // Then initialize variables using those constants
 let timeLeft = WORK_TIME;
@@ -84,6 +86,7 @@ function resetTimer() {
     timerId = null;
     timeLeft = isWorkTime ? WORK_TIME : BREAK_TIME;
     updateDisplay();
+    resetSound.play();
     startButton.textContent = 'Start';
 }
 
