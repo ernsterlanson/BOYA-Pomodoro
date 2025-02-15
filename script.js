@@ -103,15 +103,30 @@ function timerComplete() {
     clearInterval(timerId);
     timerId = null;
     
+    // Play completion sound
     if (isWorkTime) {
         workCompleteSound.play();
     } else {
         restCompleteSound.play();
     }
     
-    // Switch modes and start the timer automatically
-    toggleMode();
-    startTimer();
+    // Switch modes without playing switch sound
+    isWorkTime = !isWorkTime;
+    timeLeft = isWorkTime ? WORK_TIME : BREAK_TIME;
+    toggleButton.textContent = isWorkTime ? 'Rest Mode' : 'Work Mode';
+    statusText.textContent = isWorkTime ? 'Work Time' : 'Rest Time';
+    updateDisplay();
+    
+    // Start timer without playing start sound
+    timerId = setInterval(() => {
+        timeLeft--;
+        updateDisplay();
+        
+        if (timeLeft === 0) {
+            timerComplete();
+        }
+    }, 1000);
+    startButton.textContent = 'Pause';
 }
 
 function timerTick() {
