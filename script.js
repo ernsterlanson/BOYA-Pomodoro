@@ -109,7 +109,9 @@ function timerComplete() {
         restCompleteSound.play();
     }
     
-    startButton.textContent = 'Start';
+    // Switch modes and start the timer automatically
+    toggleMode();
+    startTimer();
 }
 
 function timerTick() {

@@ -1,1 +1,1 @@
-Add different sounds for the button clicks
+Fix so that it resets the timer when the time is up
